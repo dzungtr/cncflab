@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: demo
+  project: devopslab
+  source:
+    repoURL: 'https://github.com/argoproj/argocd-example-apps.git'
+    path: guestbook
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
