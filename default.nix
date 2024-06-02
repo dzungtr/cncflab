@@ -1,10 +1,11 @@
 with import <nixpkgs> {};
 
 mkShell {
-  name = "devopslab";
+  name = "cncflab";
   packages = [
     argocd
     kustomize_4
     kubectl
+    gnupg
   ];
 }
