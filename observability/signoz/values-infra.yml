@@ -1,0 +1,7 @@
+global:
+  cloud: others
+  clusterName: microk8s
+otelCollectorEndpoint: signoz-obs-otel-collector.observability:4317
+presets:
+  loggingExporter:
+    enabled: true

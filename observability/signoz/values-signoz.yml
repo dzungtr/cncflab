@@ -1,0 +1,2 @@
+global:
+  storageClass: microk8s-hostpath
