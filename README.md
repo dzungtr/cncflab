@@ -20,6 +20,7 @@ microk8s status --wait-ready
 
 ```shell
 microk8s enable dns
+microk8s enable hostpath-storage
 ```
 
 ### 3. Start any applications

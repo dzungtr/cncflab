@@ -7,5 +7,11 @@ mkShell {
     kustomize_4
     kubectl
     gnupg
+    tilt
+    openapi-generator-cli
+    kubernetes-helm
+    jq
+    envsubst
+    cilium-cli
   ];
 }
