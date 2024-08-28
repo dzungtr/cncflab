@@ -1,0 +1,26 @@
+kubeProxyReplacement: true
+operator:
+  replicas: 1
+
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+  ui:
+    enabled: true
+
+
+ipam:
+  mode: kubernetes
+
+ingressController:
+  enabled: true
+  loadbalancerMode: shared
+
+nodePort:
+  enabled: true
+
+l7Proxy: true
+
+prometheus:
+  enabled: true
