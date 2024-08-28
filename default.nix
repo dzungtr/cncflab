@@ -13,5 +13,7 @@ mkShell {
     jq
     envsubst
     cilium-cli
+    hubble
+    kind
   ];
 }
