@@ -10,9 +10,4 @@ helmCharts:
   repo: https://charts.signoz.io
   releaseName: signoz-obs
   namespace: observability
-  valuesFile: values-signoz.yml
-- name: k8s-infra
-  repo: https://charts.signoz.io
-  releaseName: k8s-infra
-  namespace: observability
-  valuesFile: values-infra.yml
+  valuesFile: values.yml
