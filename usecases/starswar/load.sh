@@ -1,0 +1,2 @@
+kubectl exec -n starswar tiefighter -- curl -s -XPOST deathstar.starswar.svc.cluster.local/v1/request-landing
+# kubectl exec -n starswar xwing -- curl -s -XPOST deathstar.starswar.svc.cluster.local/v1/request-landing

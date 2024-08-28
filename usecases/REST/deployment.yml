@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  book-services
+spec:
+  selector:
+    matchLabels:
+      app: book-services
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: book-services
+    spec:
+      containers:
+      - image: stoplight/prism
+        name:  book-services
+        imagePullPolicy: Always
+        args:
+          - mock
+          - /etc/openapi/books.spec.yaml
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "125M"
+        livenessProbe:
+          httpGet:
+            path: /v1/health
+            port: 8080
+          initialDelaySeconds: 90
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /v1/health
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+        env:
+        - name: OPENAPI_MOCK_SPECIFICATION_URL
+          value: /etc/openapi/books.spec.yaml
+        ports:
+        - containerPort:  8080
+          name: http
+        volumeMounts:
+        - mountPath: /etc/openapi/books.spec.yml
+          name: api-specs
+          subPath: books.spec.yml
+          readOnly: true
+      volumes:
+        - name: api-specs
+          configMap:
+            name: books-api-spec
+            items:
+              - key: books.spec.yml
+                path: books.spec.yml
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: book-svc
+spec:
+  selector:
+    app: book-services
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080

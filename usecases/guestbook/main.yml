@@ -5,7 +5,7 @@ metadata:
 spec:
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: demo
+    namespace: guestbook
   project: cncflab
   source:
     repoURL: 'https://github.com/argoproj/argocd-example-apps.git'
