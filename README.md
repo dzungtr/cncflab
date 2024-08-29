@@ -4,7 +4,7 @@ This is repo is created at education purpose. It contains the running example fo
 
 ## Getting started
 
-### 0. Prerequisite
+### Prerequisite
 These software need to be installed and well setup in local machine
 - [Nix shell](https://nixos.org/download/#download-nix)
 - [Direnv](https://direnv.net/)
