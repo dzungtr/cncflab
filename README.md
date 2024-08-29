@@ -40,6 +40,9 @@ tilt up -- --observability signoz
 # Cilium run as primary network configuration
 tilt up -- --cluster cni-disable --network cilium
 ```
+
+![tilt up](./assets/tiltup.png)
+
 ## Project structure
 
 #### 1. Use cases
