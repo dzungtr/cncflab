@@ -1,6 +1,11 @@
 kubeProxyReplacement: true
 operator:
   replicas: 1
+  podAnnotations:
+    signoz.io/scrape: 'true'
+    signoz.io/port: '9963'
+    signoz.io/path: /metrics
+
 
 hubble:
   enabled: true
@@ -24,3 +29,14 @@ l7Proxy: true
 
 prometheus:
   enabled: true
+
+podAnnotations:
+  signoz.io/scrape: 'true'
+  signoz.io/port: '9962'
+  signoz.io/path: /metrics
+
+envoy:
+  podAnnotations:
+    signoz.io/scrape: 'true'
+    signoz.io/port: '9964'
+    signoz.io/path: /metrics
