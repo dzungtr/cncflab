@@ -9,4 +9,4 @@ then
 fi
 
 # use cluster context
-kubectl config use-context $CLUSTER_CONTEXT
+kubectl config use-context "$CLUSTER_CONTEXT"
