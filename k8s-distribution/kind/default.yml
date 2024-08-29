@@ -2,10 +2,6 @@ apiVersion: kind.x-k8s.io/v1alpha4
 kind: Cluster
 name: cncflab-default
 
-# replace cni by cilium
-networking:
-  disableDefaultCNI: true
-
 nodes:
 - role: control-plane
 - role: worker

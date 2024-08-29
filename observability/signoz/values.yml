@@ -2,7 +2,7 @@ global:
   # storageClass: microk8s-hostpath # microk8s
   storageClass: standard # cilium
   cloud: others
-  clusterName: cncflab-default
+  clusterName: cncflab
 k8s-infra:
   enabled: true
   otelCollectorEndpoint: signoz-obs-otel-collector.observability:4317
