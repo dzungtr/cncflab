@@ -4,32 +4,41 @@ This is repo is created at education purpose. It contains the running example fo
 
 ## Getting started
 
-### 1. Installing Microk8s
+### 0. Prerequisite
+These software need to be installed and well setup in local machine
+- [Nix shell](https://nixos.org/download/#download-nix)
+- [Direnv](https://direnv.net/)
 
-Following the instruction in installing microk8s
-https://ubuntu.com/tutorials/install-microk8s-on-mac-os
+### 1. Install software
 
+Navigate to the repo folder, all software will be automatically installed by direnv and nix setup
 
-Verify successful install by running
-
-```shell
-microk8s status --wait-ready
+```
+~/p/dzungtr> cd cncflab/
+direnv: loading ~/project/dzungtr/cncflab/.envrc
+direnv: using nix
+direnv: export <SOME env var>
 ```
 
-### 2. Enable CoreDNS
+List of softwares installed can be tracked in `default.nix` file. The lab uses `kind` as k8s cluster distribution to set up local easily. More information, you can reference here https://kind.sigs.k8s.io/
+
+### 2. Start any applications
 
 ```shell
-microk8s enable dns
-microk8s enable hostpath-storage
-```
+# To start the cluster with the set up you want:
+tilt up -- <options>
 
-### 3. Start any applications
+# eg:
 
-```shell
-# start argocd
-kubectl apply -k argocd
-# start demo app
-kubectl apply -k applications/guestbook
+# default
+tilt up
+tilt up -- --cluser default # optional
+
+# signoz as observability
+tilt up -- --observability signoz
+
+# Cilium run as primary network configuration
+tilt up -- --cluster cni-disable --network cilium
 ```
 ## Project structure
 
@@ -44,10 +53,10 @@ Some example include:
 5. Realtime streaming application
 
 
-#### 2. Helms
-
-This folder define the list of helm chart for each software mentioned in Roadmap. it showcase the installation in the Kubernetes cluster and example configuration
-
-#### 3. Domain folder (APIGateway, ServiceMesh, ...)
+#### 2. Domain folder (APIGateway, ServiceMesh, ...)
 
 These folder present for each domain mentioned in CNCF landscape. In each of domain contains the example usage of each software. Those can be documentation of getting start and running or the detail manifest of the software.
+
+#### 3. Scripts
+
+Predefined utitlity scripts
