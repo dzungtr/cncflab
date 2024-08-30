@@ -3,7 +3,14 @@ kind: Kustomization
 
 namespace: kube-system
 
-# resources:
+resources:
+  # Gateway API
+  # standard CRD
+  # - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/standard-install.yaml
+  # experiment CRD
+  - https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/experimental-install.yaml
+  # cilium powered gateway
+  - gateway.yml
 
 helmCharts:
   - name: cilium

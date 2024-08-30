@@ -1,0 +1,16 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: cilium-lb
+spec:
+  gatewayClassName: cilium
+  listeners:
+  - protocol: HTTP
+    port: 31799
+    name: default-lb
+    allowedRoutes:
+      namespaces:
+        from: All
+      # selector:
+      #   gateway.enabled: "true"
+      #   gateway.name: "default"

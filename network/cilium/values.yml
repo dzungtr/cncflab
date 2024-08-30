@@ -1,6 +1,6 @@
-kubeProxyReplacement: true
 operator:
-  replicas: 1
+  replicas: 3
+  # Observability with signoz
   podAnnotations:
     signoz.io/scrape: 'true'
     signoz.io/port: '9963'
@@ -14,19 +14,20 @@ hubble:
   ui:
     enabled: true
 
-
+# IP management
 ipam:
   mode: kubernetes
 
-ingressController:
-  enabled: true
-  loadbalancerMode: shared
-
+# Gateway API controller
+# either enable kubeProxyReplacement or nodePort 
+# kubeProxyReplacement: true
 nodePort:
   enabled: true
 
 l7Proxy: true
 
+# Observability with signoz
+# Expose metrics
 prometheus:
   enabled: true
 
@@ -40,3 +41,22 @@ envoy:
     signoz.io/scrape: 'true'
     signoz.io/port: '9964'
     signoz.io/path: /metrics
+
+# Gateway API & Ingress controller
+gatewayAPI:
+  enabled: true
+  hostNetwork:
+    enabled: true
+    nodes:
+      matchLabels:
+        hostNetwork: "true"
+
+  gatewayClass:
+    create: "true"
+
+# ingressController:
+#   enabled: true
+#   loadbalancerMode: shared
+#   service:
+#     insecureNodePort: 31799
+#     secureNodePort: 32426
