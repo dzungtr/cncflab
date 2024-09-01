@@ -46,12 +46,17 @@ tilt up -- --cluster cni-disable --network cilium
 
 Alternatively, you can create cluster by running
 ```shell
-kind create cluster k8s-distribution/kind/<config-file>
+kind create cluster --config k8s-distribution/kind/<config-file>
+
+# to stop cluster
+kind delete cluster --name <cluster-name>
 ```
 
 ## Project structure
 
 #### 1. Use cases
+
+> `/usecase`
 
 This folder contains deployment's manifests for different example applications.
 Some example include:
@@ -62,6 +67,8 @@ Some example include:
 
 
 #### 2. Domain folder (APIGateway, ServiceMesh, ...)
+
+> `/network`, `/gateway`, etc
 
 These folder present for each domain mentioned in CNCF landscape. In each of domain contains the example usage of the software. 
 To run a the stack, you can either run command:
@@ -78,4 +85,7 @@ tilt up -- --observability signoz
 
 #### 3. Scripts
 
+> `/scripts`
+
 Predefined utitlity scripts
+- [x] Create kind cluster script
