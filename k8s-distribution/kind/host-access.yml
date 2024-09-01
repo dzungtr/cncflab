@@ -1,0 +1,16 @@
+# for Mac, required docker version ^ 4.30.0
+
+apiVersion: kind.x-k8s.io/v1alpha4
+kind: Cluster
+name: cncflab-host-access
+
+nodes:
+- role: control-plane
+  extraMounts:
+    - hostPath: /proc
+      containerPath: /procHost
+  extraPortMappings:
+  - containerPort: 80
+    hostPort: 3280
+  - containerPort: 443
+    hostPort: 3443
