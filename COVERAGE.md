@@ -13,6 +13,7 @@ skip
 #### Security & Compliance
 - [ ] Falco
 - [ ] Open Policy Agent
+- [x] Tetragon
 
 #### Key Management
 - [ ] Spiffe
@@ -32,7 +33,7 @@ skip
 - [ ] CRI-O
 
 #### Cloud Native Network
-- [ ] Cilium (graduated)
+- [x] Cilium (graduated)
 - [ ] Container Network Interface (CNI) (incubating)
 
 ### Orchestration & Management
@@ -70,18 +71,20 @@ skip
 - [ ] NATS (incubating)
 
 #### Application Definition & Image Build
-- [ ] Helm (graduated)
+- [x] Helm (graduated)
 - [ ] Artifact Hub (incubating)
 - [ ] Backstage (incubating)
 - [ ] Buildpacks (incubating)
 
 #### Continuous Integration & Delivery
-- [ ] Argo (graduated)
+- [x] Argo (graduated)
 - [ ] Flux (graduated)
 
 ### Observability and Analysis
 
 #### Observability
+- [x] Signoz
+- [x] Clickhouse
 - [ ] Fluentd (graduated)
 - [ ] Jaeger (graduated)
 - [ ] Prometheus (graduated)
