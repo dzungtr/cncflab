@@ -6,4 +6,4 @@ namespace: starswar
 resources:
   - namespace.yml
   - https://raw.githubusercontent.com/cilium/cilium/1.16.1/examples/minikube/http-sw-app.yaml
-  # - route.yml
+  - route.yml
