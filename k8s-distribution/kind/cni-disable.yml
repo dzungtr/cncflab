@@ -10,6 +10,7 @@ nodes:
 - role: control-plane
 - role: worker
   image: kindest/node:v1.29.8
+  # Port mapping to access Loadbalancer service from host
   extraPortMappings:
   - containerPort: 31799
     hostPort: 3280
