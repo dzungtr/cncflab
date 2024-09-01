@@ -65,7 +65,7 @@ To open Hubble service map UI:
 cilium hubble ui
 ```
 
-![Hubble UI](./assets/hubble-ui.png)
+![Hubble UI](../../assets/hubble-ui.png)
 
 Try different Cilium features by modifying `values.yml`
 
