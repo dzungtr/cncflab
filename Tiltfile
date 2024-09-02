@@ -35,8 +35,8 @@ if network == "cilium":
 observability = cfg.get("observability")
 
 # signoz
-if observability == "signoz":
-  manifest = kustomize("observability/signoz", flags = [
+if observability != "":
+  manifest = kustomize("observability/" + observability, flags = [
     "--enable-helm"
   ])
   k8s_yaml(manifest)
