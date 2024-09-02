@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: observability
+
+resources:
+  - namespace.yml
+
+helmCharts:
+  - name: lgtm-distributed
+    repo: https://grafana.github.io/helm-charts
+    releaseName: lgtm
+    includeCRDs: true
+    namespace: observability
+    valuesFile: values.yml
+  - name: promtail
+    repo: https://grafana.github.io/helm-charts
+    releaseName: promtail
+    includeCRDs: true
+    namespace: observability
+    valuesFile: promtailValues.yml
