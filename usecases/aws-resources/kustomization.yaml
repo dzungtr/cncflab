@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: rest-api
+
+resources:
+  - namespace.yml
+  - deployment.yml
+  - buckets.yml
+
+configMapGenerator:
+  - name: books-api-spec
+    files: 
+    - books.spec.yml
