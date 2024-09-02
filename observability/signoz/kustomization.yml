@@ -4,10 +4,6 @@ namespace: observability
 
 resources:
   - namespace.yml
-  # Install clickhouse CRDs
-  - charts/signoz/charts/clickhouse/crds/clickhouseinstallations.clickhouse.altinity.com.yaml
-  - charts/signoz/charts/clickhouse/crds/clickhouseoperatorconfigurations.clickhouse.altinity.com.yaml
-  - charts/signoz/charts/clickhouse/crds/clickhouseinstallationtemplates.clickhouse.altinity.com.yaml
 
 
 helmCharts:
@@ -16,3 +12,4 @@ helmCharts:
   releaseName: signoz-obs
   namespace: observability
   valuesFile: values.yml
+  includeCRDs: true
