@@ -1,0 +1,38 @@
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: DefaultVPC
+metadata:
+  name: books-vpc
+spec:
+  forProvider:
+    region: us-east-1
+  providerConfigRef:
+    name: default
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: DefaultSecurityGroup
+metadata:
+  name: books-sec
+spec:
+  forProvider:
+    region: us-east-1
+  providerConfigRef:
+    name: default
+---
+apiVersion: eks.aws.upbound.io/v1beta2
+kind: Cluster
+metadata:
+  name: books-cluster
+spec:
+  forProvider:
+    region: us-east-1
+    vpcConfig:
+      securityGroupIdRefs:
+        - name: books-sec
+          policy:
+            resolution: Required
+            resolve: IfNotPresent
+    kubernetesNetworkConfig:
+      ipFamily: ipv4
+      serviceIpv4Cidr: 172.20.0.0/16
+  providerConfigRef:
+    name: default
