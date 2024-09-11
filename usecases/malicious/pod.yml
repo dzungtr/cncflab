@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: malicious
+  labels:
+    policy.network.restrict.egress: "true"
+    policy.network.restrict.ingress: "true"
+    app.lang: "golang"
+spec:
+  containers:
+    - name: malicious
+      image: golang:1.23.1-bullseye
+      command:
+        - sleep
+        - infinity

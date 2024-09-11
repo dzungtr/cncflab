@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: kubearmor
+
+helmCharts:
+  - name: kubearmor-operator
+    repo: https://kubearmor.github.io/charts
+    releaseName: kubearmor-operator
+    namespace: kubearmor
+    includeCRDs: true
+
+resources:
+  - namespace.yml
+  - https://raw.githubusercontent.com/kubearmor/KubeArmor/main/pkg/KubeArmorOperator/config/samples/sample-config.yml
+  - https://raw.githubusercontent.com/kubearmor/policy-templates/main/pci-dss/network/cnp-pci-dss-7.2.3-egress-default-deny.yaml
+
+patches:
+  - target:
+      kind: CiliumNetworkPolicy
+      name: cnp-pci-dss-7.2.3-egress-default-deny
+    path: pci-dss.json

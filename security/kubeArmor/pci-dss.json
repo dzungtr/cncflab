@@ -1,0 +1,9 @@
+[
+  {
+    "op": "replace",
+    "path": "/spec/endpointSelector/matchLabels",
+    "value": {
+      "policy.network.restrict.egress": "true"
+    }
+  }
+]

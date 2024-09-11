@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: malicious
+
+resources:
+  - namespace.yml
+  - pod.yml
+  - https://raw.githubusercontent.com/kubearmor/policy-templates/main/pci-dss/network/cnp-pci-dss-7.2.3-egress-default-deny.yaml
+  - https://raw.githubusercontent.com/kubearmor/policy-templates/main/golang/system/ksp-audit-golang-cmd-go-package-cve-2022-23773.yaml
+
+patches:
+  - target:
+      kind: CiliumNetworkPolicy
+      name: cnp-pci-dss-7.2.3-egress-default-deny
+    path: pci-dss.json
+  - target:
+      kind: KubeArmorPolicy
+      name: ksp-audit-golang-cmd-go-package-cve-2022-23773
+    path: golang.json
