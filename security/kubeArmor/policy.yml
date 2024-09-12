@@ -1,0 +1,77 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "cnp-pci-dss-7.2.3-egress-default-deny"
+spec:
+  description: "Egress default deny. An endpoint can be put into the default deny mode at egress"
+  endpointSelector:
+    matchLabels:
+      policy.network.restrict.egress: "true"
+  egress:
+  - {}
+---
+# KubeArmor is an open source software that enables you to protect your cloud workload at run-time.
+# To learn more about KubeArmor visit:
+# https://www.accuknox.com/kubearmor/
+
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorClusterPolicy
+metadata:
+  name: ksp-audit-golang-cmd-go-package-cve-2022-23773
+spec:
+  tags: ["golang", "cmd/go-package", "CVE-2022-23773"]
+  message: "Alert! cmd/go package directory has been invoked. Please update to go version 1.17.7. Ignore if already done"
+  selector:
+    matchExpressions:
+      - key: namespace
+        operator: NotIn
+        values:
+          - kube-system
+  file:
+    severity: 5
+    matchDirectories:
+      - dir: /usr/local/go/src/cmd/go/
+        recursive: true
+  action: Audit
+---
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorClusterPolicy
+metadata:
+  name: prevent-go-pkg-installation
+spec:
+  tags: ["golang", "cmd/go-package", "RCE"]
+  message: "Alert! command go install has been invoked"
+  selector:
+    matchExpressions:
+      - key: namespace
+        operator: NotIn
+        values:
+          - kube-system
+  severity: 5
+  process:
+    matchPaths:
+      - path: /usr/local/go/bin/go
+
+  action: Audit
+---
+apiVersion: security.kubearmor.com/v1
+kind: KubeArmorClusterPolicy
+metadata:
+  name: restrict-file-access
+spec:
+  tags: ["file", "process", "log"]
+  message: "Alert! try to access restricted file"
+  selector:
+    matchExpressions:
+      - key: namespace
+        operator: NotIn
+        values:
+          - kube-system
+  severity: 5
+  file:
+    matchDirectories:
+      - dir: /var/
+        recursive: true
+      - dir: /proc/
+        recursive: true
+  action: Audit

@@ -1,0 +1,8 @@
+autoDeploy: true
+
+
+kubearmorConfig:
+  defaultCapabilitiesPosture: audit
+  defaultFilePosture: audit
+  defaultNetworkPosture: audit
+  defaultVisibility: process,network,file

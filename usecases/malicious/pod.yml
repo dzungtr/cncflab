@@ -5,6 +5,8 @@ metadata:
   labels:
     policy.network.restrict.egress: "true"
     policy.network.restrict.ingress: "true"
+    policy.files.restrict: "true"
+    policy.process.restrict: "true"
     app.lang: "golang"
 spec:
   containers:

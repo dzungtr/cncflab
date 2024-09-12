@@ -9,14 +9,9 @@ helmCharts:
     releaseName: kubearmor-operator
     namespace: kubearmor
     includeCRDs: true
+    version: v1.4.1
+    valuesFile: value.yml
 
 resources:
   - namespace.yml
-  - https://raw.githubusercontent.com/kubearmor/KubeArmor/main/pkg/KubeArmorOperator/config/samples/sample-config.yml
-  - https://raw.githubusercontent.com/kubearmor/policy-templates/main/pci-dss/network/cnp-pci-dss-7.2.3-egress-default-deny.yaml
-
-patches:
-  - target:
-      kind: CiliumNetworkPolicy
-      name: cnp-pci-dss-7.2.3-egress-default-deny
-    path: pci-dss.json
+  - policy.yml
