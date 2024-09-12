@@ -15,5 +15,6 @@ mkShell {
     cilium-cli
     hubble
     kind
+    karmor
   ];
 }
