@@ -1,0 +1,5 @@
+ignoredNamespaces:
+  - observability
+  - kube-system
+  - local-path-storage
+  - kube-node-lease
