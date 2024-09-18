@@ -5,6 +5,7 @@ name: cncflab-cni-disable
 # replace cni by cilium
 networking:
   disableDefaultCNI: true
+  kubeProxyMode: "none"
 
 nodes:
 - role: control-plane
