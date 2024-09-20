@@ -1,0 +1,11 @@
+podSecurityStandard: baseline
+
+policyExclude:
+  # Exclude resources from individual policies
+  disallow-privileged-containers:
+    any:
+    - resources:
+        kinds:
+        - Pod
+        namespaces:
+        - kube-system

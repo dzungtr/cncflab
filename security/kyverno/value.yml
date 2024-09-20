@@ -1,0 +1,31 @@
+admissionController:
+  replicas: 1
+  metricsService:
+    create: true
+  podAnnotations:
+    signoz.io/scrape: 'true'
+    signoz.io/port: '8000'
+
+backgroundController:
+  replicas: 1
+  metricsService:
+    create: true
+  podAnnotations:
+    signoz.io/scrape: 'true'
+    signoz.io/port: '8000'
+
+cleanupController:
+  replicas: 1
+  metricsService:
+    create: true
+  podAnnotations:
+    signoz.io/scrape: 'true'
+    signoz.io/port: '8000'
+
+reportsController:
+  replicas: 1
+  metricsService:
+    create: true
+  podAnnotations:
+    signoz.io/scrape: 'true'
+    signoz.io/port: '8000'
