@@ -7,9 +7,9 @@ nodes:
 - role: worker
   image: kindest/node:v1.29.8
   extraPortMappings:
-  - containerPort: 8000
+  - containerPort: 31794
     hostPort: 3280
-  - containerPort: 443
+  - containerPort: 32731
     hostPort: 3443
 - role: worker
   image: kindest/node:v1.29.8
