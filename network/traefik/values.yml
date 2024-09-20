@@ -1,0 +1,37 @@
+deployment:
+  replicas: 3
+
+gateway:
+  enabled: true
+  name: traefik-lb
+  # -- Additional gateway annotations (e.g. for cert-manager.io/issuer)
+  annotations: {}
+  # -- Define listeners
+  listeners:
+    web:
+      port: 31794
+      protocol: HTTP
+      namespacePolicy: All
+    # websecure:
+    #   port: 32731
+    #   hostname: "*"
+    #   protocol: HTTPS
+    #   namespacePolicy: All
+    #   mode: Terminate
+    #   certificateRefs:
+    #     group:
+    #     kind:
+    #     name:
+    #     namespace:
+
+ports:
+  web:
+    port: 31794
+  websecure:
+    port: 32731
+
+providers:
+  kubernetesGateway: 
+    enabled: false
+  kubernetesIngress:
+    enabled: true

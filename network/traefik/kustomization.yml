@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: traefik
+
+resources:
+  - namespace.yml
+
+helmCharts:
+  - name: traefik
+    repo: https://traefik.github.io/charts
+    releaseName: proxy
+    namespace: traefik
+    includeCRDs: true
+    valuesFile: values.yml

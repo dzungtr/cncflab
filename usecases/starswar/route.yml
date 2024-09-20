@@ -6,6 +6,8 @@ spec:
   parentRefs:
   - name: cilium-lb
     namespace: kube-system
+  - name: traefik-lb
+    namespace: traefik
   rules:
   - matches:
     - path:
