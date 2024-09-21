@@ -1,0 +1,16 @@
+crds:
+  enabled: true
+
+global:
+  logLevel: 6
+
+# for EKS
+# webhook:
+#   securePort: 10252
+#   hostNetwork: true
+
+
+config:
+  apiVersion: controller.config.cert-manager.io/v1alpha1
+  kind: ControllerConfiguration
+  enableGatewayAPI: true

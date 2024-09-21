@@ -1,0 +1,10 @@
+secretTargets:
+  enabled: true
+  authorizedSecrets:
+    - trust-manager-tls
+
+app:
+  webhook:
+    tls:
+      helmCert:
+        enabled: true
