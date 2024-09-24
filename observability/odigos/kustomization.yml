@@ -4,6 +4,7 @@ namespace: observability
 
 resources:
   - namespace.yml
+  - destination.yml
 
 
 helmCharts:

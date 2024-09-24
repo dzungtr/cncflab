@@ -1,0 +1,15 @@
+apiVersion: odigos.io/v1alpha1
+kind: Destination
+metadata:
+  name: signoz
+  namespace: observability
+spec:
+  data:
+    OTLP_GRPC_ENDPOINT: signoz-obs-otel-collector.observability:4317
+    # OTLP_GRPC_ENDPOINT: otel-collector.observability:4317
+  destinationName: Signoz
+  signals:
+  - TRACES
+  - METRICS
+  - LOGS
+  type: otlp
