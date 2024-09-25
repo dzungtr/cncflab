@@ -1,0 +1,14 @@
+manager:
+  collectorImage:
+    repository: otel/opentelemetry-collector-k8s
+  extraArgs:
+    - --enable-go-instrumentation=true
+
+admissionWebhooks:
+  certManager:
+    enabled: true
+    certificateAnnotations:
+      cert-manager.io/cluster-issuer: otel-operator
+    issuerRef:
+      kind: ClusterIssuer
+      name: selfsigned-cluster-issuer
