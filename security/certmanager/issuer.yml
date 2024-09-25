@@ -15,10 +15,17 @@ spec:
     # Add a single challenge solver, HTTP01 using nginx
     solvers:
     - http01:
-        # ingress:
-        #   ingressClassName: proxy-traefik
-        gatewayHTTPRoute:
-          serviceType: ClusterIP
-          parentRefs:
-            - name: traefik-lb
-            - name: cilium-lb
+        ingress:
+          ingressClassName: proxy-traefik
+        # gatewayHTTPRoute:
+        #   serviceType: ClusterIP
+        #   parentRefs:
+        #     - name: traefik-lb
+        #     - name: cilium-lb
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned-cluster-issuer
+spec:
+  selfSigned: {}
