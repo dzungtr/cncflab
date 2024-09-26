@@ -27,6 +27,7 @@ gateway:
 ports:
   web:
     port: 31794
+    # hostPort: 31794
   websecure:
     port: 32731
 
