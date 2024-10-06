@@ -1,0 +1,7 @@
+name: cncflab
+description: cncflab testing for pulumi
+runtime: go
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-go

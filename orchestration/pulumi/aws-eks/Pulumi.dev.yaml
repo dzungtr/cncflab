@@ -1,0 +1,7 @@
+config:
+  aws-eks:desiredClusterSize: "3"
+  aws-eks:eksNodeInstanceType: t3.micro
+  aws-eks:maxClusterSize: "3"
+  aws-eks:minClusterSize: "3"
+  aws-eks:vpcNetworkCidr: 10.0.0.0/16
+  aws:region: ap-southeast-2
