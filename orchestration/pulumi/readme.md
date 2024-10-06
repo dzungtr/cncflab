@@ -39,7 +39,7 @@ pulumi login --endpoint
 pulumi login s3://<bucket-name>
 ```
 
-#### 3, Spin up the stack
+#### 3. Spin up the stack
 
 ```shell
 # Start a new workspace with template aws eks
