@@ -1,4 +1,6 @@
+encryptionsalt: v1:m/CMfd9RHEM=:v1:I+rhEPBt+8pOrHt4:JZEFCt6HnO3XL7xsoPrN++7lp9rRVQ==
 config:
+  aws:region: us-east-1
   aws:accessKey: test
   aws:s3UsePathStyle: "true"
   aws:secretKey: test

@@ -1,5 +1,5 @@
-name: cncflab
-description: cncflab testing for pulumi
+name: aws-s3
+description: A minimal AWS Go Pulumi program
 runtime: go
 config:
   pulumi:tags:

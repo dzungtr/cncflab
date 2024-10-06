@@ -1,4 +1,4 @@
-module cncflab
+module aws-s3
 
 go 1.21
 
