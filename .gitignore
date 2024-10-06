@@ -1,3 +1,4 @@
 .env
 charts
 volumes
+.pulumi
