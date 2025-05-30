@@ -1,0 +1,10 @@
+# Default values for KServe
+# Reference: https://github.com/kserve/kserve/blob/master/charts/kserve/values.yaml
+
+controllers:
+  enabled: true
+
+modelmesh:
+  enabled: false
+
+deploymentMode: Serverless

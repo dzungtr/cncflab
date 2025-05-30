@@ -1,0 +1,4 @@
+# Istio base configuration
+# This chart contains CRDs and cluster-wide resources
+# Usually no custom values needed for base installation
+defaultRevision: default

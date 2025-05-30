@@ -1,0 +1,43 @@
+# Istiod control plane configuration
+pilot:
+  autoscaleEnabled: true
+  autoscaleMin: 1
+  autoscaleMax: 5
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2048Mi
+
+# Global configuration
+global:
+  # Change to cluster-local if you don't want Istio to manage external traffic
+  trafficManagement:
+    enabled: true
+  
+  # Enable Istio CNI for better security (optional)
+  # Requires Istio CNI to be installed separately
+  cni:
+    enabled: false
+
+# Telemetry v2 configuration
+# telemetry:
+#   v2:
+#     prometheus:
+#       configOverride:
+#         inboundSidecar:
+#           disable_host_header_fallback: true
+#         outboundSidecar:
+#           disable_host_header_fallback: true
+
+# MeshConfig default values
+meshConfig:
+  defaultConfig:
+    proxyStatsMatcher:
+      inclusionRegexps:
+      - ".*outlier_detection.*"
+      - ".*circuit_breakers.*"
+      - ".*upstream_rq_retry.*"
+      - ".*upstream_rq_pending.*"
+      - ".*_cx_.*"
+      - ".*osconfig.*"
+      - ".*wasm.*"

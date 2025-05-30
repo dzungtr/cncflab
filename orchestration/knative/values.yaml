@@ -1,0 +1,13 @@
+# Knative Operator Helm Chart Values
+# Currently using default values
+
+# To customize the operator deployment, uncomment and modify:
+# operator:
+#   replicas: 1
+#   resources:
+#     limits:
+#       cpu: 1000m
+#       memory: 1000Mi
+#     requests:
+#       cpu: 100m
+#       memory: 100Mi

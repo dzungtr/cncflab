@@ -1,0 +1,41 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: istio-system
+
+resources:
+  - namespace.yaml
+
+helmCharts:
+  # Istio base chart contains CRDs and cluster-wide resources
+  - name: base
+    repo: https://istio-release.storage.googleapis.com/charts
+    releaseName: istio-base
+    namespace: istio-system
+    version: 1.24.2
+    valuesFile: base-values.yaml
+
+  # Istiod control plane
+  - name: istiod
+    repo: https://istio-release.storage.googleapis.com/charts
+    releaseName: istiod
+    namespace: istio-system
+    version: 1.24.2
+    valuesFile: istiod-values.yaml
+
+  # Istio ingress gateway (optional)
+  - name: gateway
+    repo: https://istio-release.storage.googleapis.com/charts
+    releaseName: istio-ingress
+    namespace: istio-system
+    version: 1.24.2
+    valuesFile: gateway-values.yaml
+
+  # Istio CNI for better pod security (optional)
+  # Uncomment to enable CNI mode
+  # - name: cni
+  #   repo: https://istio-release.storage.googleapis.com/charts
+  #   releaseName: istio-cni
+  #   namespace: istio-system
+  #   version: 1.24.2
+  #   valuesFile: cni-values.yaml

@@ -1,0 +1,17 @@
+# Istio CNI configuration (optional)
+# Uncomment the CNI section in kustomization.yaml to use this
+cni:
+  enabled: true
+  # Exclude namespaces from Istio CNI
+  excludeNamespaces:
+    - kube-system
+    - kube-public
+    - kube-node-lease
+    - istio-system
+  
+  # Logging level
+  logLevel: info
+  
+  # CNI bin and conf directories (usually auto-detected)
+  # cniBinDir: /opt/cni/bin
+  # cniConfDir: /etc/cni/net.d

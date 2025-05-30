@@ -1,0 +1,13 @@
+
+apiVersion: kagent.dev/v1alpha1
+kind: ModelConfig
+metadata:
+  name: gemma3-model-config
+  namespace: kagent
+spec:
+  apiKeySecretKey: OPENAI_API_KEY
+  apiKeySecretRef: kagent-openai
+  model: gemma3:12b-it-q8_0
+  provider: Ollama
+  ollama:
+    host: http://open-webui-ollama.open-webui
