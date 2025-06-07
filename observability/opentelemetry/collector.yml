@@ -3,13 +3,15 @@ kind: OpenTelemetryCollector
 metadata:
   name: otel
 spec:
-  securityContext:
+  managementState: managed
+  mode: deployment
+  replicas: 1
+  image: otel/opentelemetry-collector-contrib:latest
+  podSecurityContext:
     runAsUser: 0
-    capabilities:
-      add:
-        - SYS_PTRACE
-    privileged: true
-  config: |
+    runAsNonRoot: false
+    fsGroup: 0
+  config:
     receivers:
       otlp:
         protocols:
@@ -25,22 +27,50 @@ spec:
       batch:
         send_batch_size: 10000
         timeout: 10s
-
     exporters:
-      otlp:
-        endpoint: signoz-obs-otel-collector.observability:4317
-
+      otlp/tempo:
+        endpoint: tempo.observability:4317
+        tls:
+          insecure: true
+      prometheusremotewrite:
+        endpoint: http://kube-prom-stack-kube-prome-prometheus.observability:9090/api/v1/write
+        tls:
+          insecure: true
+        resource_to_telemetry_conversion:
+          enabled: true
+        target_info:
+          enabled: false
+        add_metric_suffixes: false
+        send_metadata: false
+      loki:
+        endpoint: http://loki.observability:3100/loki/api/v1/push
+        default_labels_enabled:
+          exporter: true
+          job: true
+          instance: true
+          level: true
+      debug:
+        verbosity: detailed
+        sampling_initial: 5
+        sampling_thereafter: 200
     service:
       pipelines:
         traces:
           receivers: [otlp]
           processors: [memory_limiter, batch]
-          exporters: [otlp]
+          exporters: [otlp/tempo]
         metrics:
           receivers: [otlp]
           processors: [memory_limiter, batch]
-          exporters: [otlp]
+          exporters: [prometheusremotewrite]
         logs:
           receivers: [otlp]
           processors: [memory_limiter, batch]
-          exporters: [otlp]
+          exporters: [loki]
+  ports:
+    - name: otlp-grpc
+      port: 4317
+      protocol: TCP
+    - name: otlp-http
+      port: 4318
+      protocol: TCP
