@@ -1,6 +1,6 @@
 global:
-  # storageClass: microk8s-hostpath # microk8s
-  storageClass: standard # cilium
+  storageClass: microk8s-hostpath # microk8s
+  # storageClass: standard # cilium
   cloud: others
   clusterName: cncflab
 k8s-infra:
@@ -9,3 +9,29 @@ k8s-infra:
   presets:
     loggingExporter:
       enabled: true
+
+signoz:
+  ingress:
+    enabled: true
+    className: tailscale
+    annotations: {}
+    hosts:
+      - host: ""
+        paths:
+          - path: /
+            pathType: Prefix
+            port: 8080
+    tls: []
+
+otelCollector:
+  ingress:
+    enabled: true
+    className: tailscale
+    annotations: {}
+    hosts:
+      - host: ""
+        paths:
+          - path: /
+            pathType: Prefix
+            port: 4318
+    tls: []
