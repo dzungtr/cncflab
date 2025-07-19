@@ -1,22 +1,24 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: kube-system
+namespace: certmanager
+
+resources:
+  - issuer.yml
+  - namespace.yaml
+  # - bundle.yml
 
 helmCharts:
   - name: cert-manager
     repo: https://charts.jetstack.io
     releaseName: cman
-    namespace: kube-system
+    namespace: certmanager
     includeCRDs: true
     valuesFile: certValues.yml
   # - name: trust-manager
   #   repo: https://charts.jetstack.io
   #   releaseName: tman
-  #   namespace: kube-system
+  #   namespace: certmanager
   #   includeCRDs: true
   #   valuesFile: trustValues.yml
 
-resources:
-  - issuer.yml
-  # - bundle.yml
