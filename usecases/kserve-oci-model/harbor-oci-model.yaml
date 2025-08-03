@@ -1,0 +1,31 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: harbor-oci-model
+  namespace: kubeflow-user-example-com
+  annotations:
+    serving.kserve.io/enable-prometheus-scraping: "true"
+    serving.kserve.io/storageSecretName: "harbor-credentials"
+    signoz.io/scrape: "true"
+    signoz.io/port: "8080"
+    signoz.io/path: "/metrics"
+spec:
+  predictor:
+    imagePullSecrets:
+      - name: harbor-secret
+    model:
+      modelFormat:
+        name: huggingface
+      # Using OCI protocol with modelcar enabled for Harbor registry
+      # Note: Requires enableModelcar: true in KServe storageInitializer config
+      # Image must contain model files in /models direct:working_dir: dirory
+      storageUri: oci://localhost:30002/modelcars/meta-llama-llama-3.2-1b:latest
+      resources:
+        requests:
+          cpu: "1"
+          memory: 4Gi
+          nvidia.com/gpu: "1"
+        limits:
+          cpu: "2"
+          memory: 8Gi
+          nvidia.com/gpu: "1"
