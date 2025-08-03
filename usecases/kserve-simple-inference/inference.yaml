@@ -1,0 +1,41 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: gemma-3-1b-it
+  namespace: kubeflow-user-example-com
+  annotations:
+    serving.kserve.io/enable-prometheus-scraping: "true"
+    signoz.io/scrape: "true"
+    signoz.io/port: "8080"
+    signoz.io/path: "/metrics"
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: huggingface
+      args:
+        - --model_name=gemma-3-1b-it
+        - --model_id=google/gemma-3-1b-it
+        - --enable_docs_url=True
+      env:
+        - name: HF_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: hf-secrets
+              key: HF_TOKEN
+
+        - name: KSERVE_OPENAI_ROUTE_PREFIX # Disable OpenAI Route Prefix
+          value: ""
+        - name: HF_HUB_ENABLE_HF_TRANSFER
+          value: "0"
+        - name: HF_HUB_DISABLE_TELEMETRY
+          value: "1"
+      resources:
+        requests:
+          cpu: "1"
+          memory: 4Gi
+          nvidia.com/gpu: "1"
+        limits:
+          cpu: "2"
+          memory: 12Gi
+          nvidia.com/gpu: "1"
