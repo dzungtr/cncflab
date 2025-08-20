@@ -1,7 +1,0 @@
-config:
-  azure-native:location: EastUS
-  project: raglearning
-  aiAccountTier: S0
-  model: gpt-4o-mini
-  modelVersion: "2024-07-18"
-  
