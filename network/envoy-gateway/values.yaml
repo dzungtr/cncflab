@@ -1,0 +1,20 @@
+# Envoy Gateway Helm values
+# https://gateway.envoyproxy.io/
+
+# Default configuration for Envoy Gateway
+# Modify as needed for your environment
+
+# Example overrides:
+# config:
+#   envoyGateway:
+#     gateway:
+#       controllerName: gateway.envoyproxy.io/envoy-gateway-controller
+
+# Resources
+# resources:
+#   limits:
+#     cpu: 500m
+#     memory: 512Mi
+#   requests:
+#     cpu: 100m
+#     memory: 128Mi
