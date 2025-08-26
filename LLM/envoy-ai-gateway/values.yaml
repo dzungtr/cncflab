@@ -1,0 +1,24 @@
+# Envoy AI Gateway Helm values
+# Default values should work for most cases
+# Customize as needed for your environment
+
+# Example configuration overrides:
+# replicaCount: 1
+# image:
+#   repository: envoyproxy/ai-gateway
+#   pullPolicy: IfNotPresent
+#   tag: ""
+
+# Service configuration
+# service:
+#   type: ClusterIP
+#   port: 80
+
+# Resources
+# resources:
+#   limits:
+#     cpu: 1000m
+#     memory: 1Gi
+#   requests:
+#     cpu: 100m
+#     memory: 128Mi

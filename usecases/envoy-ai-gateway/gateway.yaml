@@ -1,0 +1,52 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: envoy-ai-gateway-basic
+spec:
+  gatewayClassName: envoy-ai-gateway-basic
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+---
+apiVersion: aigateway.envoyproxy.io/v1alpha1
+kind: AIServiceBackend
+metadata:
+  name: qwen3-2507-4b
+spec:
+  schema:
+    name: OpenAI
+  backendRef:
+    name: qwen3-2507-4b-predictor
+    namespace: kubeflow-user-example-com  
+    kind: Service
+    group: ""
+    port: 80
+---
+apiVersion: aigateway.envoyproxy.io/v1alpha1
+kind: AIGatewayRoute
+metadata:
+  name: qwen3-2507-4b
+spec:
+  schema:
+    name: OpenAI
+  targetRefs:
+    - name: envoy-ai-gateway-basic
+      kind: Gateway
+      group: gateway.networking.k8s.io
+  rules:
+    - matches:
+        - headers:
+            - type: Exact
+              name: x-ai-eg-model
+              value: qwen3-2507-4b
+      backendRefs:
+        - name: qwen3-2507-4b  # AIServiceBackend Name
+          weight: 100
+  llmRequestCosts:
+    - metadataKey: llm_input_token
+      type: InputToken    # Counts tokens in the request
+    - metadataKey: llm_output_token
+      type: OutputToken   # Counts tokens in the response
+    - metadataKey: llm_total_token
+      type: TotalToken   # Tracks combined usage

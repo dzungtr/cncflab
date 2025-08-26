@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+
+helmCharts:
+  - name: ai-gateway-helm
+    repo: oci://docker.io/envoyproxy
+    version: v0.0.0-latest
+    releaseName: aieg
+    namespace: envoy-ai-gateway-system
+    valuesFile: values.yaml
+  - name: ai-gateway-crds-helm
+    repo: oci://docker.io/envoyproxy
+    version: v0.0.0-latest
+    releaseName: aieg-crd
+    namespace: envoy-ai-gateway-system
