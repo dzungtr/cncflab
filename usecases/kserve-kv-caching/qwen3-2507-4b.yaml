@@ -1,0 +1,59 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: qwen3-2507-4b
+  namespace: kubeflow-user-example-com
+  annotations:
+    serving.kserve.io/enable-prometheus-scraping: "true"
+    serving.kserve.io/storageSecretName: "harbor-credentials"
+    signoz.io/scrape: "true"
+    signoz.io/port: "8080"
+    signoz.io/path: "/metrics"
+spec:
+  predictor:
+    imagePullSecrets:
+      - name: harbor-secret
+    model:
+      modelFormat:
+        name: huggingface
+      # Using OCI protocol with modelcar enabled for Harbor registry
+      # Note: Requires enableModelcar: true in KServe storageInitializer config
+      # Image must contain model files in /models directory
+      storageUri: oci://localhost:30002/modelcars/qwen-qwen3-4b-thinking-2507:latest
+      # Use KServe v0.15.1 image for better KV cache support
+      image: kserve/huggingfaceserver:v0.15.2
+      args:
+        - --max-model-len=10000
+        - --gpu-memory-utilization=0.8
+        - --enable-chunked-prefill
+        - --kv-transfer-config
+        - '{"kv_connector":"LMCacheConnectorV1", "kv_role":"kv_both"}'
+      env:
+        - name: PYTORCH_CUDA_ALLOC_CONF
+          value: "expandable_segments:True"
+        # LMCache configuration for KV cache offloading
+        - name: LMCACHE_CONFIG_FILE
+          value: "/lmcache/lmcache_config.yaml"
+        - name: LMCACHE_USE_EXPERIMENTAL
+          value: "True"
+        - name: LMCACHE_LOG_LEVEL
+          value: "INFO"
+        - name: KSERVE_OPENAI_ROUTE_PREFIX
+          value: ""
+      resources:
+        requests:
+          cpu: "1"
+          memory: 4Gi
+          nvidia.com/gpu: "1"
+        limits:
+          cpu: "2"
+          memory: 8Gi
+          nvidia.com/gpu: "1"
+      volumeMounts:
+        - name: lmcache-config
+          mountPath: /lmcache
+          readOnly: true
+    volumes:
+      - name: lmcache-config
+        configMap:
+          name: lmcache-config

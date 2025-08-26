@@ -1,0 +1,12 @@
+kind: ReferenceGrant
+apiVersion: gateway.networking.k8s.io/v1beta1
+metadata:
+  name: envoy-gateway-ref-grant
+spec:
+  from:
+  - group: gateway.networking.k8s.io
+    kind: HTTPRoute
+    namespace: ai-gateway
+  to:
+  - group: ""
+    kind: Service

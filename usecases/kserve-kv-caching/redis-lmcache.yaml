@@ -1,0 +1,73 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lmcache-redis
+  namespace: kubeflow-user-example-com
+spec:
+  type: ClusterIP
+  ports:
+    - port: 6379
+      targetPort: 6379
+      protocol: TCP
+      name: redis
+  selector:
+    app: lmcache-redis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lmcache-redis
+  namespace: kubeflow-user-example-com
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lmcache-redis
+  template:
+    metadata:
+      labels:
+        app: lmcache-redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        ports:
+        - containerPort: 6379
+          name: redis
+        resources:
+          requests:
+            memory: "12Gi"
+            cpu: "1"
+          limits:
+            memory: "24Gi"
+            cpu: "2"
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+        command:
+        - redis-server
+        args:
+        - --maxmemory
+        - "3gb"
+        - --maxmemory-policy
+        - allkeys-lru
+        - --save
+        - ""
+        - --appendonly
+        - "no"
+        livenessProbe:
+          tcpSocket:
+            port: 6379
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: redis-data
+        emptyDir: {}
