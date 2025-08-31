@@ -8,6 +8,9 @@ config.define_string("cluster", args=False)
 config.define_string("network", args=False)
 config.define_string("observability", args=False)
 config.define_string("cicd", args=False)
+config.define_string("orchestration", args=False)
+config.define_string("storage", args=False)
+config.define_string("llm", args=False)
 cfg = config.parse()
 
 # cluster bootstrap
@@ -51,3 +54,39 @@ if cicd == "argocd":
     "--enable-helm"
   ])
   k8s_yaml(manifest)
+
+# orchestration section
+orchestration = cfg.get("orchestration")
+
+# kubeflow
+if orchestration == "kubeflow":
+  local_resource(
+    "orchestration-kubeflow",
+    cmd="kustomize build orchestration/kubeflow --enable-helm | kubectl apply -f -",
+    deps=["orchestration/kubeflow"],
+    labels=["orchestration"]
+  )
+
+# storage section
+storage = cfg.get("storage")
+
+# goharbor
+if storage == "goharbor":
+  local_resource(
+    "storage-goharbor",
+    cmd="kustomize build storage/goharbor --enable-helm | kubectl apply -f -",
+    deps=["storage/goharbor"],
+    labels=["storage"]
+  )
+
+# llm section
+llm = cfg.get("llm")
+
+# envoy-ai-gateway
+if llm == "envoy-ai-gateway":
+  local_resource(
+    "llm-envoy-ai-gateway",
+    cmd="kustomize build LLM/envoy-ai-gateway --enable-helm | kubectl apply -f -",
+    deps=["LLM/envoy-ai-gateway"],
+    labels=["llm"]
+  )
