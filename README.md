@@ -1,91 +1,30 @@
-# CNCFLAB
+# CNCF Lab
 
-This is repo is created at education purpose. It contains the running example for tools mentioned in [cncf landscape](https://landscape.cncf.io/guide#orchestration-management--api-gateway). 
+> A hands-on learning lab for operating the cloud-native stack — built and maintained by a Platform Engineer on the journey from full-stack development to principal-level infrastructure.
 
-## Getting started
+## Who built this and why
 
-### Prerequisite
-These software need to be installed and well setup in local machine
-- [Nix shell](https://nixos.org/download/#download-nix)
-- [Direnv](https://direnv.net/)
-- Container run time. eg: Docker desktop ^4.30.0
+I'm a Platform Engineer based in Melbourne, Australia. My background is unusual for infrastructure: I started as a React Native developer, moved through full-stack engineering, and transitioned into platform and infrastructure work around late 2022.
 
-### 1. Install software
+That path gave me something most platform engineers don't have — I've felt the developer experience from inside the application layer. I know what it's like to wait on a slow deploy, hit a confusing network policy, or debug an opaque observability stack. That perspective shapes how I think about platform engineering: the platform exists to serve developers, not the other way around.
 
-Navigate to the repo folder, all software will be automatically installed by direnv and nix setup
+This lab exists because I believe the only way to truly understand cloud-native infrastructure is to operate it yourself — not just read the docs, not just watch tutorials, but run it, break it, fix it, and do it again.
 
-```
-~/p/dzungtr> cd cncflab/
-direnv: loading ~/project/dzungtr/cncflab/.envrc
-direnv: using nix
-direnv: export <SOME env var>
-```
+**What I'm exploring here:**
 
-List of softwares installed can be tracked in `default.nix` file. The lab uses `kind` as k8s cluster distribution to set up local easily. More information, you can reference here https://kind.sigs.k8s.io/
+- **Networking**: Cilium as CNI and service mesh — network policies, eBPF-based observability, identity-aware traffic control
+- **GitOps & CI/CD**: ArgoCD — App of Apps pattern, ApplicationSets, multi-tenant isolation
+- **Security**: Kyverno admission control, Falco runtime threat detection, Tetragon eBPF enforcement
+- **Observability**: The LGTM stack (Loki, Grafana, Tempo, Mimir) and SigNoz as an alternative
+- **Orchestration**: KEDA event-driven autoscaling, Argo Workflows
+- **AI/LLM Infrastructure**: Running LLM workloads on Kubernetes — the `LLM/` folder is where this is growing
 
-### 2. Create cluster and run software
+The toolchain itself is intentional: `kind` for reproducible local clusters, `Tilt` for fast feedback loops, `Nix` + `direnv` for hermetic environments. Every tool choice has a reason.
 
-```shell
-# To start the cluster with the set up you want:
-tilt up -- <options>
+## What this is not
 
-# eg:
+This is not a polished framework or a production blueprint. It's a living laboratory. Some things are half-finished. Some experiments failed and stayed in the repo as evidence of that. The ROADMAP and COVERAGE files track what's done and what's next.
 
-# default
-tilt up
-tilt up -- --cluser default # optional
+If you're a fellow engineer learning this stack, I hope something here saves you an hour of confusion. If you're evaluating my work, this represents real hands-on depth — not just knowledge of what these tools do, but experience with how they actually behave.
 
-# signoz as observability
-tilt up -- --observability signoz
-
-# Cilium run as primary network configuration
-tilt up -- --cluster cni-disable --network cilium
-```
-
-![tilt up](./assets/tiltup.png)
-
-Alternatively, you can create cluster by running
-```shell
-kind create cluster --config k8s-distribution/kind/<config-file>
-
-# to stop cluster
-kind delete cluster --name <cluster-name>
-```
-
-## Project structure
-
-#### 1. Use cases
-
-> `/usecase`
-
-This folder contains deployment's manifests for different example applications.
-Some example include:
-1. REST API micro service
-2. Hotrod: https://github.com/jaegertracing/jaeger/tree/main/examples/hotrod
-4. Starswar: https://docs.cilium.io/en/stable/gettingstarted/demo/
-5. Guestbooks: https://github.com/argoproj/argocd-example-apps
-
-
-#### 2. Domain folder (APIGateway, ServiceMesh, ...)
-
-> `/network`, `/gateway`, etc
-
-These folder present for each domain mentioned in CNCF landscape. In each of domain contains the example usage of the software. 
-To run a the stack, you can either run command:
-
-```shell
-kustomize build <kustomzation-path> --enable-helm | kubectl apply -f -
-
-# or provide the flag in tilt up command
-tilt up -- --<folder-name> <tool-name>
-
-# ex:
-tilt up -- --observability signoz
-```
-
-#### 3. Scripts
-
-> `/scripts`
-
-Predefined utitlity scripts
-- [x] Create kind cluster script
+---
