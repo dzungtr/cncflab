@@ -12,21 +12,22 @@ The v2.x Helm chart uses a two-phase installation: operators/CRDs first, then th
 ## Prerequisites
 
 - Helm v3+
+- kustomize v5+ (with `--enable-helm` support)
 - Kubernetes cluster (v1.20+, e.g. kind, k3s, minikube)
 - `kubectl` configured and pointing at your cluster
 
 ## Deploy
 
 ```bash
-bash install.sh
+kubectl create namespace clickstack --dry-run=client -o yaml | kubectl apply -f -
+kustomize build observability/clickstack --enable-helm | kubectl apply -f -
 ```
 
-The script will:
-1. Add the ClickStack Helm repository
-2. Install the `clickstack-operators` chart (ClickHouse Operator + MongoDB Operator + OTel Operator CRDs)
-3. Wait for operator pods to become ready
-4. Create the `clickstack` namespace
-5. Install the main `clickstack` chart with local-dev overrides from `values.yaml`
+The kustomization will:
+1. Install the `clickstack-operators` chart (ClickHouse Operator + MongoDB Operator + OTel Operator CRDs)
+2. Install the main `clickstack` chart with local-dev overrides from `values.yaml`
+
+> **Note:** `install.sh` is kept for reference but is deprecated in favour of the kustomize-based deployment above.
 
 ## Access
 

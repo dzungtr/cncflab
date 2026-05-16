@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmCharts:
+  - name: clickstack-operators
+    repo: https://clickhouse.github.io/ClickStack-helm-charts
+    version: "1.0.0"
+    releaseName: clickstack-operators
+    namespace: clickstack
+
+  - name: clickstack
+    repo: https://clickhouse.github.io/ClickStack-helm-charts
+    version: "2.1.1"
+    releaseName: clickstack
+    namespace: clickstack
+    valuesFile: values.yaml
+
+namespace: clickstack
