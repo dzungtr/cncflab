@@ -20,14 +20,25 @@ The v2.x Helm chart uses a two-phase installation: operators/CRDs first, then th
 
 ```bash
 kubectl create namespace clickstack --dry-run=client -o yaml | kubectl apply -f -
+
+# Install MongoDB CRDs (not bundled in the operators chart)
+kubectl apply -f https://raw.githubusercontent.com/mongodb/mongodb-kubernetes/refs/heads/master/config/crd/bases/mongodbcommunity.mongodb.com_mongodbcommunity.yaml
+kubectl apply -f https://raw.githubusercontent.com/mongodb/mongodb-kubernetes/refs/heads/master/config/crd/bases/mongodb.com_mongodbsearch.yaml
+
+# Deploy ClickStack
+kustomize build observability/clickstack --enable-helm | kubectl apply -f -
+
+# Re-apply after operators start to create ClickHouse/MongoDB custom resources
 kustomize build observability/clickstack --enable-helm | kubectl apply -f -
 ```
 
-The kustomization will:
-1. Install the `clickstack-operators` chart (ClickHouse Operator + MongoDB Operator + OTel Operator CRDs)
-2. Install the main `clickstack` chart with local-dev overrides from `values.yaml`
+The deployment follows a two-phase pattern:
+1. First apply installs CRDs, operator deployments, and base resources
+2. Second apply creates the ClickHouseCluster, KeeperCluster, and MongoDBCommunity custom resources once CRD API types are registered
 
-> **Note:** `install.sh` is kept for reference but is deprecated in favour of the kustomize-based deployment above.
+> **MongoDB CRD note:** The `clickstack-operators` v1.0.0 chart does not bundle MongoDB CRDs. They must be applied manually from the upstream MongoDB Kubernetes operator repository before deploying.
+
+> **`install.sh` note:** Kept for reference but is deprecated in favour of the kustomize-based deployment above.
 
 ## Access
 
