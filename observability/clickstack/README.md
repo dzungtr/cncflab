@@ -38,8 +38,6 @@ The deployment follows a two-phase pattern:
 
 > **MongoDB CRD note:** The `clickstack-operators` v1.0.0 chart does not bundle MongoDB CRDs. They must be applied manually from the upstream MongoDB Kubernetes operator repository before deploying.
 
-> **`install.sh` note:** Kept for reference but is deprecated in favour of the kustomize-based deployment above.
-
 ## Access
 
 ### HyperDX UI
